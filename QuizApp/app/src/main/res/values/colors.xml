@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- App Theme Colors -->
+    <color name="colorPrimary">#4F46E5</color>
+    <color name="colorPrimaryVariant">#4338CA</color>
+    <color name="colorSecondary">#06B6D4</color>
+    <color name="backgroundColor">#F8FAFC</color>
+    <color name="surfaceColor">#FFFFFF</color>
+    <color name="textPrimary">#0F172A</color>
+    <color name="textSecondary">#64748B</color>
+    <color name="textMuted">#94A3B8</color>
+    <color name="dividerColor">#E2E8F0</color>
+
+    <!-- Quiz Status & Alerts -->
+    <color name="success">#10B981</color>
+    <color name="successLight">#ECFDF5</color>
+    <color name="danger">#EF4444</color>
+    <color name="dangerLight">#FEF2F2</color>
+    <color name="warning">#F59E0B</color>
+    <color name="warningLight">#FFFBEB</color>
+    <color name="timerUrgent">#E11D48</color>
+
+    <!-- Category Colors -->
+    <color name="cat_tech_bg">#E0E7FF</color>
+    <color name="cat_tech_text">#3730A3</color>
+    <color name="cat_edu_bg">#FEF3C7</color>
+    <color name="cat_edu_text">#92400E</color>
+    <color name="cat_science_bg">#D1FAE5</color>
+    <color name="cat_science_text">#065F46</color>
+    <color name="cat_general_bg">#FCE7F3</color>
+    <color name="cat_general_text">#9D174D</color>
+    <color name="cat_health_bg">#CFFAFE</color>
+    <color name="cat_health_text">#155E75</color>
+</resources>

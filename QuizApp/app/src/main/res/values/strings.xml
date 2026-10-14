@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">KuisPintar</string>
+    <string name="tagline">Kuis &amp; Kuesioner Interaktif</string>
+    
+    <!-- Home Screen -->
+    <string name="search_hint">Cari judul kuis atau kuesioner...</string>
+    <string name="category_all">Semua</string>
+    <string name="category_tech">Teknologi</string>
+    <string name="category_education">Pendidikan</string>
+    <string name="category_science">Sains</string>
+    <string name="category_general">Umum</string>
+    <string name="category_health">Kesehatan</string>
+    <string name="create_quiz_btn">Buat Kuis Baru</string>
+    <string name="total_questions_format">%1$d Pertanyaan</string>
+    <string name="duration_format">%1$d Detik</string>
+    <string name="start_quiz">Mulai Kuis</string>
+    <string name="no_quizzes_found">Belum ada kuis pada kategori ini.</string>
+
+    <!-- Create Quiz Screen -->
+    <string name="create_quiz_title">Buat Kuis Baru</string>
+    <string name="quiz_title_label">Judul Kuis</string>
+    <string name="quiz_title_hint">Contoh: Kuis Dasar Python</string>
+    <string name="quiz_category_label">Kategori Kuis</string>
+    <string name="quiz_duration_label">Durasi Countdown (Detik)</string>
+    <string name="quiz_duration_hint">Misal: 60 (dalam detik)</string>
+    <string name="quiz_desc_label">Deskripsi Singkat</string>
+    <string name="quiz_desc_hint">Penjelasan kuis atau kuesioner ini...</string>
+    <string name="questions_section_title">Daftar Pertanyaan</string>
+    <string name="add_question_btn">+ Tambah Pertanyaan</string>
+    <string name="save_quiz_btn">Simpan Kuis</string>
+    <string name="question_number_format">Pertanyaan #%1$d</string>
+    <string name="question_text_hint">Tuliskan pertanyaan disini...</string>
+    <string name="option_a_hint">Pilihan A</string>
+    <string name="option_b_hint">Pilihan B</string>
+    <string name="option_c_hint">Pilihan C</string>
+    <string name="option_d_hint">Pilihan D</string>
+    <string name="correct_answer_label">Pilih Kunci Jawaban yang Benar:</string>
+
+    <!-- Play Quiz Screen -->
+    <string name="time_remaining">Sisa Waktu</string>
+    <string name="prev_btn">Sebelumnya</string>
+    <string name="next_btn">Berikutnya</string>
+    <string name="finish_btn">Selesai &amp; Kirim</string>
+    <string name="time_up_title">Waktu Habis!</string>
+    <string name="time_up_message">Waktu pengerjaan kuis telah habis. Jawaban Anda otomatis dikumpulkan.</string>
+    <string name="confirm_finish_title">Konfirmasi Selesai</string>
+    <string name="confirm_finish_message">Apakah Anda yakin ingin menyelesaikan kuis ini sekarang?</string>
+    <string name="yes">Ya, Selesai</string>
+    <string name="no">Lanjut Mengerjakan</string>
+
+    <!-- Result Screen -->
+    <string name="quiz_result_title">Hasil Kuis</string>
+    <string name="score_label">Skor Akhir</string>
+    <string name="correct_answers_label">Jawaban Benar</string>
+    <string name="wrong_answers_label">Jawaban Salah</string>
+    <string name="time_spent_label">Waktu Digunakan</string>
+    <string name="review_answers_title">Pembahasan &amp; Tinjauan Jawaban</string>
+    <string name="btn_restart_quiz">Ulangi Kuis</string>
+    <string name="btn_home">Kembali ke Beranda</string>
+</resources>

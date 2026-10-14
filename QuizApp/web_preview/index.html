@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4F46E5">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #eef2ff;
+            --secondary: #06b6d4;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --success-light: #ecfdf5;
+            --danger: #ef4444;
+            --danger-light: #fef2f2;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e1e2f 0%, #111827 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Mockup Phone Frame */
+        .phone-wrapper {
+            width: 100%;
+            max-width: 420px;
+            height: 860px;
+            background: #ffffff;
+            border-radius: 44px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 10px #2d3748;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Android Status Bar Mock */
+        .status-bar {
+            height: 38px;
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 24px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-main);
+            z-index: 50;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .screen-container {
+            flex: 1;
+            overflow-y: auto;
+            position: relative;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .app-header {
+            background: var(--surface);
+            padding: 16px 20px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .app-title-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .app-subtitle {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* Search input */
+        .search-box {
+            margin-top: 14px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 16px 10px 38px;
+            background: #f1f5f9;
+            border: 1px solid transparent;
+            border-radius: 12px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-sub);
+            font-size: 16px;
+        }
+
+        /* Category Chips Bar */
+        .category-chips {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 20px;
+            background: var(--surface);
+            scrollbar-width: none;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .category-chips::-webkit-scrollbar {
+            display: none;
+        }
+
+        .chip {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            background: #f1f5f9;
+            color: var(--text-sub);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chip.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        /* Quiz List */
+        .quiz-list {
+            padding: 16px 20px 90px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .quiz-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .quiz-card:active {
+            transform: scale(0.98);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .category-badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-tech { background: #e0e7ff; color: #3730a3; }
+        .badge-edu { background: #fef3c7; color: #92400e; }
+        .badge-science { background: #d1fae5; color: #065f46; }
+        .badge-general { background: #fce7f3; color: #9d174d; }
+        .badge-health { background: #cffafe; color: #155e75; }
+
+        .timer-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #fee2e2;
+            color: #e11d48;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .quiz-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+
+        .quiz-desc {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 14px;
+        }
+
+        .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+        }
+
+        .question-count {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .btn-start {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-start:hover {
+            background: var(--primary-hover);
+        }
+
+        /* FAB Button */
+        .fab-create {
+            position: absolute;
+            bottom: 24px;
+            right: 20px;
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+            border: none;
+            cursor: pointer;
+            z-index: 20;
+            transition: transform 0.2s;
+        }
+
+        .fab-create:active {
+            transform: scale(0.95);
+        }
+
+        /* Modal Overlay Screens */
+        .overlay-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .overlay-screen.active {
+            transform: translateY(0);
+        }
+
+        .screen-topbar {
+            background: var(--surface);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .btn-icon-back {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-main);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .topbar-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-main);
+            flex: 1;
+        }
+
+        .form-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .question-builder-card {
+            background: var(--surface);
+            border-radius: 14px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+        }
+
+        .qb-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .btn-delete-qb {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .qb-option-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bottom-action-bar {
+            background: var(--surface);
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-full {
+            flex: 1;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        /* QUIZ PLAY SCREEN */
+        .play-timer-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 16px 20px 0;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .timer-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-sub);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .countdown-digits {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+            transition: color 0.3s;
+        }
+
+        .countdown-digits.urgent {
+            color: #e11d48;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .progress-bar-bg {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 100%;
+            transition: width 1s linear, background-color 0.3s;
+        }
+
+        .progress-bar-fill.urgent {
+            background: #e11d48;
+        }
+
+        .play-question-box {
+            padding: 16px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .question-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-sub);
+        }
+
+        .question-text-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.5;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .option-choice-btn {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .option-choice-btn:hover {
+            border-color: var(--primary);
+        }
+
+        .option-choice-btn.selected {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .option-badge {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 13px;
+            color: var(--text-sub);
+        }
+
+        .option-choice-btn.selected .option-badge {
+            background: var(--primary);
+            color: #ffffff;
+        }
+
+        /* RESULT SCREEN */
+        .result-score-card {
+            background: var(--surface);
+            border-radius: 20px;
+            padding: 28px 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+        }
+
+        .trophy-icon {
+            font-size: 56px;
+            margin-bottom: 10px;
+        }
+
+        .score-headline {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .score-percent {
+            font-size: 46px;
+            font-weight: 900;
+            color: var(--primary);
+            margin: 6px 0;
+            letter-spacing: -1px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 18px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-val {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .stat-val.correct { color: var(--success); }
+        .stat-val.wrong { color: var(--danger); }
+        .stat-val.time { color: var(--primary); }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .review-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 10px;
+        }
+
+        .review-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-wrapper">
+    <!-- Android Status Bar -->
+    <div class="status-bar">
+        <span>15:30</span>
+        <div style="display: flex; gap: 6px; align-items: center;">
+            <span>📶</span>
+            <span>4G</span>
+            <span>🔋 98%</span>
+        </div>
+    </div>
+
+    <!-- MAIN SCREEN -->
+    <div class="screen-container" id="mainScreen">
+        <div class="app-header">
+            <div class="app-title-row">
+                <div>
+                    <h1 class="app-title">KuisPintar</h1>
+                    <p class="app-subtitle">Kuis & Kuesioner Interaktif</p>
+                </div>
+                <div style="font-size: 24px;">📱</div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Cari judul kuis atau kuesioner...">
+            </div>
+        </div>
+
+        <!-- Category Chips -->
+        <div class="category-chips" id="categoryChips">
+            <div class="chip active" data-category="Semua">Semua</div>
+            <div class="chip" data-category="Teknologi">Teknologi</div>
+            <div class="chip" data-category="Pendidikan">Pendidikan</div>
+            <div class="chip" data-category="Sains">Sains</div>
+            <div class="chip" data-category="Umum">Umum</div>
+            <div class="chip" data-category="Kesehatan">Kesehatan</div>
+        </div>
+
+        <!-- Quiz List -->
+        <div class="quiz-list" id="quizListContainer">
+            <!-- Dynamically populated -->
+        </div>
+
+        <!-- FAB Create Quiz -->
+        <button class="fab-create" id="btnOpenCreate">
+            <span style="font-size: 18px;">+</span> Buat Kuis Baru
+        </button>
+    </div>
+
+    <!-- CREATE QUIZ SCREEN (OVERLAY) -->
+    <div class="overlay-screen" id="createQuizScreen">
+        <div class="screen-topbar">
+            <button class="btn-icon-back" id="btnCloseCreate">←</button>
+            <h2 class="topbar-title">Buat Kuis Baru</h2>
+        </div>
+
+        <div class="form-content">
+            <div class="form-group">
+                <label class="form-label">Judul Kuis / Kuesioner</label>
+                <input type="text" class="form-input" id="inputQuizTitle" placeholder="Misal: Kuis Android & Kotlin Pemula">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kategori Kuis</label>
+                <select class="form-select" id="inputQuizCategory">
+                    <option value="Teknologi">Teknologi</option>
+                    <option value="Pendidikan">Pendidikan</option>
+                    <option value="Sains">Sains</option>
+                    <option value="Umum">Umum</option>
+                    <option value="Kesehatan">Kesehatan</option>
+                    <option value="Bisnis">Bisnis</option>
+                    <option value="Hiburan">Hiburan</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Durasi Countdown (Detik)</label>
+                <input type="number" class="form-input" id="inputQuizDuration" value="60" min="10">
+                <span style="font-size: 11px; color: var(--text-sub);">Kuis otomatis dikumpulkan jika waktu habis.</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Deskripsi Singkat</label>
+                <textarea class="form-textarea" id="inputQuizDesc" rows="2" placeholder="Jelaskan ringkasan kuis atau topik ini..."></textarea>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+                <h3 style="font-size: 15px; font-weight: 700; color: var(--text-main);" id="qbSectionHeader">Daftar Pertanyaan (1)</h3>
+                <button type="button" style="background: none; border: 1px solid var(--primary); color: var(--primary); padding: 5px 12px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer;" id="btnAddQuestionItem">+ Pertanyaan</button>
+            </div>
+
+            <!-- Dynamic Question Items -->
+            <div id="questionsBuilderContainer" style="display: flex; flex-direction: column; gap: 14px;">
+                <!-- Dynamically generated builder items -->
+            </div>
+        </div>
+
+        <div class="bottom-action-bar">
+            <button class="btn-full" id="btnSaveNewQuiz">💾 Simpan Kuis &amp; Mulai</button>
+        </div>
+    </div>
+
+    <!-- PLAY QUIZ SCREEN (OVERLAY) -->
+    <div class="overlay-screen" id="playQuizScreen">
+        <div class="screen-topbar">
+            <button class="btn-icon-back" id="btnClosePlay">✕</button>
+            <div style="flex: 1; overflow: hidden;">
+                <span class="category-badge badge-tech" id="playCategoryBadge" style="font-size: 9px;">TEKNOLOGI</span>
+                <div class="topbar-title" id="playQuizHeaderTitle" style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Judul Kuis</div>
+            </div>
+        </div>
+
+        <!-- Countdown Timer Card -->
+        <div class="play-timer-card">
+            <div class="timer-header">
+                <span class="timer-label">⏱️ Sisa Waktu</span>
+                <span class="countdown-digits" id="liveCountdownDisplay">01:00</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="countdownProgressFill"></div>
+            </div>
+        </div>
+
+        <!-- Question Box -->
+        <div class="play-question-box">
+            <div class="question-meta">
+                <span id="questionStepIndicator" style="color: var(--primary); font-weight: 800;">Pertanyaan 1 dari 4</span>
+                <span id="answeredStatusText">Belum dijawab</span>
+            </div>
+
+            <div class="question-text-card" id="playQuestionText">
+                Teks pertanyaan akan tampil di sini...
+            </div>
+
+            <!-- 4 Options -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button class="option-choice-btn" data-option="0" id="optBtn0">
+                    <span class="option-badge">A</span>
+                    <span id="optText0">Pilihan A</span>
+                </button>
+                <button class="option-choice-btn" data-option="1" id="optBtn1">
+                    <span class="option-badge">B</span>
+                    <span id="optText1">Pilihan B</span>
+                </button>
+                <button class="option-choice-btn" data-option="2" id="optBtn2">
+                    <span class="option-badge">C</span>
+                    <span id="optText2">Pilihan C</span>
+                </button>
+                <button class="option-choice-btn" data-option="3" id="optBtn3">
+                    <span class="option-badge">D</span>
+                    <span id="optText3">Pilihan D</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Controls -->
+        <div class="bottom-action-bar">
+            <button style="flex: 1; padding: 12px; background: #fff; border: 1px solid var(--border); border-radius: 10px; font-weight: 700; cursor: pointer;" id="btnPrevQ">Sebelumnya</button>
+            <button style="flex: 1; padding: 12px; background: var(--primary); color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer;" id="btnNextQ">Berikutnya</button>
+            <button style="flex: 1; padding: 12px; background: var(--success); color: #fff; border: none; border-radius: 10px; font-weight: 700; cursor: pointer; display: none;" id="btnSubmitQ">Selesai &amp; Kirim</button>
+        </div>
+    </div>
+
+    <!-- RESULT SCREEN (OVERLAY) -->
+    <div class="overlay-screen" id="resultScreen">
+        <div class="screen-topbar">
+            <h2 class="topbar-title">Hasil Kuis</h2>
+        </div>
+
+        <div class="form-content">
+            <div class="result-score-card">
+                <div class="trophy-icon">🏆</div>
+                <h3 class="score-headline" id="resultHeadline">Luar Biasa!</h3>
+                <div class="score-percent" id="resultPercent">100%</div>
+                <p style="font-size: 13px; color: var(--text-sub);" id="resultFraction">4 dari 4 pertanyaan benar</p>
+
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <div class="stat-val correct" id="statCorrect">4</div>
+                        <div class="stat-label">Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val wrong" id="statWrong">0</div>
+                        <div class="stat-label">Salah</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-val time" id="statTime">24s</div>
+                        <div class="stat-label">Waktu</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 10px;">Tinjauan Jawaban &amp; Pembahasan</h4>
+            <div id="reviewListContainer">
+                <!-- Dynamically generated -->
+            </div>
+        </div>
+
+        <div class="bottom-action-bar">
+            <button style="flex: 1; padding: 14px; background: #fff; border: 1px solid var(--border); border-radius: 12px; font-weight: 700; cursor: pointer;" id="btnRetakeQuiz">🔄 Ulangi</button>
+            <button class="btn-full" id="btnBackToHome">Beranda</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initial Dataset with Categories & Timers
+    const defaultQuizzes = [
+        {
+            id: 1,
+            title: "Dasar Pemrograman Android & Kotlin",
+            category: "Teknologi",
+            description: "Uji kemampuan dasar komponen Android, Activity lifecycle, dan sintaks Kotlin modern.",
+            durationSeconds: 60,
+            questions: [
+                {
+                    text: "Apa fungsi keyword 'val' dalam bahasa pemrograman Kotlin?",
+                    options: [
+                        "Mendeklarasikan variabel immutable (tidak bisa diubah)",
+                        "Mendeklarasikan variabel mutable (bisa diubah)",
+                        "Mendeklarasikan fungsi statis",
+                        "Mendeklarasikan class turunan"
+                    ],
+                    correct: 0
+                },
+                {
+                    text: "Siklus hidup (lifecycle) Activity yang pertama kali dipanggil saat activity dibuat adalah...",
+                    options: ["onStart()", "onResume()", "onCreate()", "onPause()"],
+                    correct: 2
+                },
+                {
+                    text: "Komponen apa yang digunakan untuk menampilkan daftar data scrollable dalam jumlah banyak secara efisien?",
+                    options: ["TextView", "RecyclerView", "ImageView", "Button"],
+                    correct: 1
+                },
+                {
+                    text: "Tool resmi yang dikembangkan Google untuk membuat aplikasi Android adalah...",
+                    options: ["Visual Studio Code", "Eclipse", "Android Studio", "Xcode"],
+                    correct: 2
+                }
+            ]
+        },
+        {
+            id: 2,
+            title: "Pengetahuan Umum Nusantara",
+            category: "Umum",
+            description: "Seberapa kenal kamu dengan sejarah, geografi, dan kebudayaan Indonesia?",
+            durationSeconds: 45,
+            questions: [
+                {
+                    text: "Ibu Kota Nusantara (IKN) berlokasi di provinsi mana?",
+                    options: ["Kalimantan Timur", "Kalimantan Barat", "Sulawesi Selatan", "Jawa Barat"],
+                    correct: 0
+                },
+                {
+                    text: "Candi Buddha terbesar di dunia yang berlokasi di Magelang adalah...",
+                    options: ["Candi Prambanan", "Candi Borobudur", "Candi Mendut", "Candi Sewu"],
+                    correct: 1
+                },
+                {
+                    text: "Lagu kebangsaan Indonesia Raya pertama kali dikumandangkan pada tahun...",
+                    options: ["1945", "1928 (Sumpah Pemuda)", "1908 (Kebangkitan Nasional)", "1930"],
+                    correct: 1
+                }
+            ]
+        },
+        {
+            id: 3,
+            title: "Eksplorasi Sains & Tata Surya",
+            category: "Sains",
+            description: "Pertanyaan seputar astronomi, biologi dasar, dan fenomena alam semesta.",
+            durationSeconds: 60,
+            questions: [
+                {
+                    text: "Planet terbesar dalam tata surya kita adalah...",
+                    options: ["Mars", "Saturnus", "Jupiter", "Neptunus"],
+                    correct: 2
+                },
+                {
+                    text: "Bagian sel tumbuhan yang bertanggung jawab dalam proses fotosintesis adalah...",
+                    options: ["Kloroplas", "Mitokondria", "Ribosom", "Inti Sel (Nukleus)"],
+                    correct: 0
+                },
+                {
+                    text: "Gas yang paling melimpah di atmosfer bumi adalah...",
+                    options: ["Oksigen", "Karbon Dioksida", "Nitrogen", "Hidrogen"],
+                    correct: 2
+                }
+            ]
+        },
+        {
+            id: 4,
+            title: "Kuesioner Gaya Belajar Siswa",
+            category: "Pendidikan",
+            description: "Kenali kecenderungan gaya belajar dominan Anda: visual, auditori, atau kinestetik.",
+            durationSeconds: 90,
+            questions: [
+                {
+                    text: "Ketika mempelajari topik baru, cara apa yang paling membantu Anda memahami?",
+                    options: [
+                        "Melihat diagram, infografis, dan video animasi",
+                        "Mendengarkan penjelasan guru atau podcast",
+                        "Mempraktikkan langsung dan membuat contoh sendiri",
+                        "Membaca buku teks berulang kali dalam keheningan"
+                    ],
+                    correct: 0
+                },
+                {
+                    text: "Ketika menghadapi tugas kelompok yang sulit, Anda lebih memilih:",
+                    options: [
+                        "Menuliskan rencana kerja secara sistematis di papan",
+                        "Mengadakan diskusi lisan bersama tim",
+                        "Membagi tugas dan langsung mengerjakan bagian masing-masing",
+                        "Mencari contoh proyek terdahulu di internet"
+                    ],
+                    correct: 1
+                }
+            ]
+        }
+    ];
+
+    // Local Storage / State
+    let quizzes = JSON.parse(localStorage.getItem('quiz_app_items')) || defaultQuizzes;
+    let selectedCategory = 'Semua';
+    let currentSearch = '';
+
+    // Active Play State
+    let activeQuiz = null;
+    let activeQuestionIndex = 0;
+    let userAnswers = [];
+    let timerInterval = null;
+    let remainingTime = 0;
+    let totalTime = 0;
+
+    // Helper: Category badge class
+    function getCategoryBadgeClass(category) {
+        switch(category.toLowerCase()) {
+            case 'teknologi': return 'badge-tech';
+            case 'pendidikan': return 'badge-edu';
+            case 'sains': return 'badge-science';
+            case 'umum': return 'badge-general';
+            case 'kesehatan': return 'badge-health';
+            default: return 'badge-tech';
+        }
+    }
+
+    // Render Quizzes
+    function renderQuizList() {
+        const container = document.getElementById('quizListContainer');
+        container.innerHTML = '';
+
+        const filtered = quizzes.filter(q => {
+            const matchCategory = selectedCategory === 'Semua' || q.category.toLowerCase() === selectedCategory.toLowerCase();
+            const matchSearch = q.title.toLowerCase().includes(currentSearch.toLowerCase()) || 
+                                q.description.toLowerCase().includes(currentSearch.toLowerCase());
+            return matchCategory && matchSearch;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 40px 20px; color: var(--text-sub);">
+                    <div style="font-size: 40px; margin-bottom: 8px;">📭</div>
+                    <p style="font-weight: 600;">Tidak ada kuis ditemukan.</p>
+                </div>
+            `;
+            return;
+        }
+
+        filtered.forEach(q => {
+            const card = document.createElement('div');
+            card.className = 'quiz-card';
+            card.innerHTML = `
+                <div class="card-top">
+                    <span class="category-badge ${getCategoryBadgeClass(q.category)}">${q.category}</span>
+                    <span class="timer-badge">⏱️ ${q.durationSeconds} Detik</span>
+                </div>
+                <h3 class="quiz-title">${q.title}</h3>
+                <p class="quiz-desc">${q.description || 'Tidak ada deskripsi.'}</p>
+                <div class="card-bottom">
+                    <span class="question-count">${q.questions.length} Pertanyaan</span>
+                    <button class="btn-start">Mulai Kuis</button>
+                </div>
+            `;
+
+            card.addEventListener('click', () => startQuiz(q));
+            container.appendChild(card);
+        });
+    }
+
+    // Category Filter Chips
+    document.querySelectorAll('.category-chips .chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.category-chips .chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            selectedCategory = chip.getAttribute('data-category');
+            renderQuizList();
+        });
+    });
+
+    // Search Input
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        currentSearch = e.target.value.trim();
+        renderQuizList();
+    });
+
+    // START QUIZ
+    function startQuiz(quiz) {
+        activeQuiz = quiz;
+        activeQuestionIndex = 0;
+        userAnswers = new Array(quiz.questions.length).fill(-1);
+        totalTime = quiz.durationSeconds;
+        remainingTime = totalTime;
+
+        // Header info
+        document.getElementById('playQuizHeaderTitle').innerText = quiz.title;
+        const badge = document.getElementById('playCategoryBadge');
+        badge.className = `category-badge ${getCategoryBadgeClass(quiz.category)}`;
+        badge.innerText = quiz.category.toUpperCase();
+
+        // Start countdown
+        startCountdown();
+
+        // Show Question 1
+        showQuestion(0);
+
+        document.getElementById('playQuizScreen').classList.add('active');
+    }
+
+    function startCountdown() {
+        clearInterval(timerInterval);
+        updateTimerDisplay();
+
+        timerInterval = setInterval(() => {
+            remainingTime--;
+            updateTimerDisplay();
+
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                alert("⏰ Waktu Habis! Kuis otomatis dikumpulkan.");
+                finishQuiz();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(remainingTime / 60);
+        const secs = remainingTime % 60;
+        const display = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        
+        const timerElem = document.getElementById('liveCountdownDisplay');
+        const fillElem = document.getElementById('countdownProgressFill');
+
+        timerElem.innerText = display;
+        const percent = Math.max(0, (remainingTime / totalTime) * 100);
+        fillElem.style.width = percent + '%';
+
+        if (remainingTime <= 10) {
+            timerElem.classList.add('urgent');
+            fillElem.classList.add('urgent');
+        } else {
+            timerElem.classList.remove('urgent');
+            fillElem.classList.remove('urgent');
+        }
+    }
+
+    function showQuestion(index) {
+        activeQuestionIndex = index;
+        const q = activeQuiz.questions[index];
+
+        document.getElementById('questionStepIndicator').innerText = `Pertanyaan ${index + 1} dari ${activeQuiz.questions.length}`;
+        document.getElementById('playQuestionText').innerText = q.text;
+
+        // Render option buttons
+        for (let i = 0; i < 4; i++) {
+            const btn = document.getElementById(`optBtn${i}`);
+            const textElem = document.getElementById(`optText${i}`);
+            textElem.innerText = q.options[i];
+
+            if (userAnswers[index] === i) {
+                btn.classList.add('selected');
+            } else {
+                btn.classList.remove('selected');
+            }
+
+            btn.onclick = () => {
+                userAnswers[index] = i;
+                showQuestion(index);
+            };
+        }
+
+        // Status text
+        const statusElem = document.getElementById('answeredStatusText');
+        if (userAnswers[index] !== -1) {
+            statusElem.innerText = "✓ Sudah dijawab";
+            statusElem.style.color = "var(--success)";
+        } else {
+            statusElem.innerText = "Belum dijawab";
+            statusElem.style.color = "var(--text-sub)";
+        }
+
+        // Nav buttons
+        document.getElementById('btnPrevQ').style.visibility = index === 0 ? 'hidden' : 'visible';
+        
+        if (index === activeQuiz.questions.length - 1) {
+            document.getElementById('btnNextQ').style.display = 'none';
+            document.getElementById('btnSubmitQ').style.display = 'block';
+        } else {
+            document.getElementById('btnNextQ').style.display = 'block';
+            document.getElementById('btnSubmitQ').style.display = 'none';
+        }
+    }
+
+    document.getElementById('btnPrevQ').addEventListener('click', () => {
+        if (activeQuestionIndex > 0) showQuestion(activeQuestionIndex - 1);
+    });
+
+    document.getElementById('btnNextQ').addEventListener('click', () => {
+        if (activeQuestionIndex < activeQuiz.questions.length - 1) showQuestion(activeQuestionIndex + 1);
+    });
+
+    document.getElementById('btnSubmitQ').addEventListener('click', () => {
+        const unanswered = userAnswers.filter(a => a === -1).length;
+        if (unanswered > 0) {
+            if (!confirm(`Masih ada ${unanswered} pertanyaan belum dijawab. Yakin ingin menyelesaikan kuis?`)) {
+                return;
+            }
+        }
+        finishQuiz();
+    });
+
+    document.getElementById('btnClosePlay').addEventListener('click', () => {
+        if (confirm("Apakah Anda yakin ingin membatalkan pengerjaan kuis ini?")) {
+            clearInterval(timerInterval);
+            document.getElementById('playQuizScreen').classList.remove('active');
+        }
+    });
+
+    function finishQuiz() {
+        clearInterval(timerInterval);
+        const timeSpent = totalTime - remainingTime;
+
+        let correctCount = 0;
+        activeQuiz.questions.forEach((q, idx) => {
+            if (userAnswers[idx] === q.correct) correctCount++;
+        });
+
+        const totalQ = activeQuiz.questions.length;
+        const wrongCount = totalQ - correctCount;
+        const percent = Math.round((correctCount / totalQ) * 100);
+
+        // Populate Result Screen
+        document.getElementById('resultPercent').innerText = `${percent}%`;
+        document.getElementById('resultFraction').innerText = `${correctCount} dari ${totalQ} pertanyaan benar`;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statWrong').innerText = wrongCount;
+        document.getElementById('statTime').innerText = `${timeSpent}s`;
+
+        const headline = document.getElementById('resultHeadline');
+        if (percent >= 80) headline.innerText = "Luar Biasa! Prestasi Hebat 🎉";
+        else if (percent >= 60) headline.innerText = "Kerja Bagus! Nilai Cukup 👍";
+        else headline.innerText = "Tetap Semangat! Coba Lagi Ya 💪";
+
+        // Review list
+        const reviewContainer = document.getElementById('reviewListContainer');
+        reviewContainer.innerHTML = '';
+
+        activeQuiz.questions.forEach((q, idx) => {
+            const userChoice = userAnswers[idx];
+            const isCorrect = userChoice === q.correct;
+            const letters = ['A', 'B', 'C', 'D'];
+
+            const item = document.createElement('div');
+            item.className = 'review-card';
+            item.innerHTML = `
+                <div class="review-head">
+                    <span style="color: var(--primary);">Soal #${idx + 1}</span>
+                    <span style="color: ${isCorrect ? 'var(--success)' : 'var(--danger)'}; font-weight: 800;">
+                        ${isCorrect ? '✓ Benar' : (userChoice === -1 ? 'Tidak Dijawab' : '✕ Salah')}
+                    </span>
+                </div>
+                <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">${q.text}</div>
+                <div style="font-size: 12px; color: ${isCorrect ? 'var(--success)' : 'var(--danger)'}; margin-bottom: 2px;">
+                    Jawaban Anda: ${userChoice !== -1 ? `${letters[userChoice]}. ${q.options[userChoice]}` : '(Kosong)'}
+                </div>
+                <div style="font-size: 12px; color: var(--success); font-weight: 600;">
+                    Kunci Jawaban: ${letters[q.correct]}. ${q.options[q.correct]}
+                </div>
+            `;
+            reviewContainer.appendChild(item);
+        });
+
+        document.getElementById('playQuizScreen').classList.remove('active');
+        document.getElementById('resultScreen').classList.add('active');
+    }
+
+    document.getElementById('btnRetakeQuiz').addEventListener('click', () => {
+        document.getElementById('resultScreen').classList.remove('active');
+        startQuiz(activeQuiz);
+    });
+
+    document.getElementById('btnBackToHome').addEventListener('click', () => {
+        document.getElementById('resultScreen').classList.remove('active');
+    });
+
+    // CREATE QUIZ BUILDER LOGIC
+    let questionItems = [];
+
+    document.getElementById('btnOpenCreate').addEventListener('click', () => {
+        questionItems = [];
+        document.getElementById('questionsBuilderContainer').innerHTML = '';
+        addQuestionBuilderItem(); // Add 1 initial question
+        document.getElementById('createQuizScreen').classList.add('active');
+    });
+
+    document.getElementById('btnCloseCreate').addEventListener('click', () => {
+        document.getElementById('createQuizScreen').classList.remove('active');
+    });
+
+    document.getElementById('btnAddQuestionItem').addEventListener('click', () => {
+        addQuestionBuilderItem();
+    });
+
+    function addQuestionBuilderItem() {
+        const qIndex = questionItems.length;
+        const qData = {
+            id: Date.now() + Math.random(),
+            text: '',
+            options: ['', '', '', ''],
+            correct: 0
+        };
+        questionItems.push(qData);
+        renderQuestionBuilders();
+    }
+
+    function renderQuestionBuilders() {
+        const container = document.getElementById('questionsBuilderContainer');
+        container.innerHTML = '';
+
+        questionItems.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-builder-card';
+            card.innerHTML = `
+                <div class="qb-header">
+                    <span>Pertanyaan #${idx + 1}</span>
+                    ${questionItems.length > 1 ? `<button class="btn-delete-qb" data-idx="${idx}">Hapus</button>` : ''}
+                </div>
+                <input type="text" class="form-input qb-input-text" placeholder="Tuliskan pertanyaan disini..." value="${item.text}">
+                
+                <div style="font-size: 11px; font-weight: 700; color: var(--text-sub);">Pilih radio button di samping jawaban yang benar:</div>
+
+                <div class="qb-option-row">
+                    <input type="radio" name="correct_${item.id}" value="0" ${item.correct === 0 ? 'checked' : ''}>
+                    <input type="text" class="form-input qb-opt" data-opt="0" placeholder="Pilihan A" value="${item.options[0]}">
+                </div>
+                <div class="qb-option-row">
+                    <input type="radio" name="correct_${item.id}" value="1" ${item.correct === 1 ? 'checked' : ''}>
+                    <input type="text" class="form-input qb-opt" data-opt="1" placeholder="Pilihan B" value="${item.options[1]}">
+                </div>
+                <div class="qb-option-row">
+                    <input type="radio" name="correct_${item.id}" value="2" ${item.correct === 2 ? 'checked' : ''}>
+                    <input type="text" class="form-input qb-opt" data-opt="2" placeholder="Pilihan C" value="${item.options[2]}">
+                </div>
+                <div class="qb-option-row">
+                    <input type="radio" name="correct_${item.id}" value="3" ${item.correct === 3 ? 'checked' : ''}>
+                    <input type="text" class="form-input qb-opt" data-opt="3" placeholder="Pilihan D" value="${item.options[3]}">
+                </div>
+            `;
+
+            // Listeners
+            card.querySelector('.qb-input-text').addEventListener('input', (e) => {
+                item.text = e.target.value;
+            });
+
+            card.querySelectorAll('.qb-opt').forEach(optInput => {
+                optInput.addEventListener('input', (e) => {
+                    const optIdx = parseInt(e.target.getAttribute('data-opt'));
+                    item.options[optIdx] = e.target.value;
+                });
+            });
+
+            card.querySelectorAll(`input[name="correct_${item.id}"]`).forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    item.correct = parseInt(e.target.value);
+                });
+            });
+
+            const delBtn = card.querySelector('.btn-delete-qb');
+            if (delBtn) {
+                delBtn.addEventListener('click', () => {
+                    questionItems.splice(idx, 1);
+                    renderQuestionBuilders();
+                });
+            }
+
+            container.appendChild(card);
+        });
+
+        document.getElementById('qbSectionHeader').innerText = `Daftar Pertanyaan (${questionItems.length})`;
+    }
+
+    // Save Quiz
+    document.getElementById('btnSaveNewQuiz').addEventListener('click', () => {
+        const title = document.getElementById('inputQuizTitle').value.trim();
+        const category = document.getElementById('inputQuizCategory').value;
+        const duration = parseInt(document.getElementById('inputQuizDuration').value) || 60;
+        const desc = document.getElementById('inputQuizDesc').value.trim();
+
+        if (!title) {
+            alert("Judul kuis tidak boleh kosong!");
+            return;
+        }
+
+        if (questionItems.length === 0) {
+            alert("Tambahkan minimal 1 pertanyaan!");
+            return;
+        }
+
+        for (let i = 0; i < questionItems.length; i++) {
+            const q = questionItems[i];
+            if (!q.text.trim()) {
+                alert(`Teks pertanyaan #${i + 1} tidak boleh kosong!`);
+                return;
+            }
+            if (q.options.some(opt => !opt.trim())) {
+                alert(`Semua opsi A, B, C, D pada pertanyaan #${i + 1} harus diisi!`);
+                return;
+            }
+        }
+
+        const newQuiz = {
+            id: Date.now(),
+            title: title,
+            category: category,
+            description: desc,
+            durationSeconds: duration,
+            questions: questionItems.map(q => ({
+                text: q.text,
+                options: [...q.options],
+                correct: q.correct
+            }))
+        };
+
+        quizzes.unshift(newQuiz);
+        localStorage.setItem('quiz_app_items', JSON.stringify(quizzes));
+
+        alert(`Kuis "${title}" berhasil disimpan!`);
+        document.getElementById('createQuizScreen').classList.remove('active');
+        
+        // Reset form
+        document.getElementById('inputQuizTitle').value = '';
+        document.getElementById('inputQuizDesc').value = '';
+
+        renderQuizList();
+    });
+
+    // Initial render
+    renderQuizList();
+
+    // Register Service Worker for PWA (Installable on Android Phone)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch(err => {
+                console.log('SW registration failed:', err);
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
